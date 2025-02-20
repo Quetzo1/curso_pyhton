@@ -5,6 +5,7 @@ import string
 import unicodedata
 from random import choice
 import funciones as fn
+import argparse
 
 def main(archivo_texto:str, nombre_plantilla='plantilla'):
     '''
@@ -26,12 +27,18 @@ def main(archivo_texto:str, nombre_plantilla='plantilla'):
     while o>0:
         fn.despliega_plantilla
         (plantillas, o)
-        fn.adivina_letra(abcdarios, p, adivinadas, o)
+        o = fn.adivina_letra(abcdarios, p, adivinadas, o)
         if p == ''.join([letra if letra in adivinadas else '_' for letra in p]):
             print('Felicidades, adivinaste la palabra!')
             break
         print(f"La palabra era: {p}")
 
 if __name__=='__main__':
-    archivo ='./datos/pg15532.txt'
-    main(archivo)
+    parser = argparse.ArgumentParser (description='juego del ahorcado')
+    parser.add_argument('-a', '--archivo', help='Archivo de texto con palabras a adivinar', default='./datos/pg15532.txt')
+    args = parser.parse_args()
+    archivo = args.archivo
+    if os.stat(archivo) == False: print(f'El archivo{archivo} no existe')
+    else:
+    #archivo ='./datos/pg15532.txt'
+        main(archivo)
